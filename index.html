@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>String Compression Tool</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+            overflow: hidden;
+        }
+
+        .clouds {
+            width: 400%;
+            height: 100%;
+            overflow: hidden;
+            background-size: cover;
+            background: url('pexels-enric-cruz-lopez-6039245.jpg');
+            animation: moveClouds 20s linear infinite; /* Slowed the cloud movement */
+        }
+
+        @keyframes moveClouds {
+            from {
+                background-position: 0% 0;
+            }
+
+            to {
+                background-position: 100% 0;
+            }
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            margin: 10% auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            width: 350px;
+            text-align: center;
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Added more expressive easing */
+            opacity: 0;
+            animation: fadeIn 1s forwards 0.5s; /* Fading in the container */
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container:hover {
+            transform: scale(1.07); /* Increased scaling for emphasis */
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #6a11cb;
+            transition: color 0.3s;
+        }
+
+        h1:hover {
+            color: #2575fc;
+        }
+
+        input {
+            width: 94%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        input:focus {
+            border-color: #6a11cb;
+            box-shadow: 0 0 5px rgba(106, 17, 203, 0.5);
+            outline: none;
+        }
+
+        button {
+            background-color: #6a11cb;
+            color: white;
+            padding: 12px 24px; /* Adjusted padding for better button size */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Added slight shadow for depth */
+        }
+
+        button:hover {
+            background-color: #2575fc;
+            transform: translateY(-3px); /* Increased lift on hover */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Stronger shadow on hover */
+        }
+
+        h2 {
+            margin-top: 20px;
+            font-size: 22px;
+            color: #333;
+            transition: color 0.3s;
+        }
+
+        h2:hover {
+            color: #6a11cb; /* Added hover effect */
+        }
+
+        p {
+            font-size: 18px;
+            color: #555;
+            margin-top: 10px;
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out, transform 0.3s ease; /* Added transform for a subtle pop */
+            transform: translateY(10px);
+        }
+
+        p.visible {
+            opacity: 1;
+            transform: translateY(0); /* Reset transform for visible state */
+        }
+
+        @media (max-width: 400px) {
+            .container {
+                width: 90%;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="clouds">
+        <div class="container">
+            <h1>String Compression Tool</h1>
+            <input type="text" id="inputString" placeholder="Enter a string to compress">
+            <button id="compressButton">Compress String</button>
+            <h2>Compressed String:</h2>
+            <p id="result"></p>
+        </div>
+    </div>
+    <script>
+        function compressString(str) {
+            if (str.length === 0) return "";
+            let compressed = "";
+            let count = 1;
+
+            for (let i = 1; i < str.length; i++) {
+                if (str[i] === str[i - 1]) {
+                    count++;
+                } else {
+                    compressed += str[i - 1] + count;
+                    count = 1;
+                }
+            }
+            compressed += str[str.length - 1] + count;
+
+            return compressed;
+        }
+
+        document.getElementById("compressButton").addEventListener("click", function () {
+            const input = document.getElementById("inputString").value;
+            const output = compressString(input);
+            const resultElement = document.getElementById("result");
+            resultElement.innerText = output;
+            resultElement.classList.add("visible");
+
+            // Small delay before showing the result
+            setTimeout(() => {
+                resultElement.classList.add("visible");
+            }, 50);
+        });
+    </script>
+</body>
+
+</html>
