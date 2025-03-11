@@ -163,14 +163,22 @@
         </div>
     </div>
     <script>
-        function compressString(str) {
+          function compressString(str) {
+            // str = "aaabbbbcc"
             if (str.length === 0) return "";
+            // "aaabbbbcc" is not empty, so this line is skipped.
             let compressed = "";
             let count = 1;
 
             for (let i = 1; i < str.length; i++) {
+                // "a","a","a", "b", "b", "b", "b", "c", "c"
                 if (str[i] === str[i - 1]) {
+                    // i = 1: 'a' === 'a' → Characters match → Increment count.str[1 - 1]
+                    //     State: count = 2
+                    // i = 2: 'a' === 'a' → Characters match → Increment count.
+                    //     State: count = 3
                     count++;
+                    // i = 3: 'b' !== 'a' → Exit this block.
                 } else {
                     compressed += str[i - 1] + count;
                     count = 1;
@@ -187,11 +195,6 @@
             const resultElement = document.getElementById("result");
             resultElement.innerText = output;
             resultElement.classList.add("visible");
-
-            // Small delay before showing the result
-            setTimeout(() => {
-                resultElement.classList.add("visible");
-            }, 50);
         });
     </script>
 </body>
